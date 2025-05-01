@@ -191,7 +191,7 @@ function Login() {
         </div>
 
         {/* Right form */}
-        <div className="md:w-1/2 p-8 flex flex-col justify-center items-center">
+        <div className="md:w-1/2 p-8 pb-2 flex flex-col justify-center items-center">
           <div className="signup-container">
             <h2 className="text-center text-2xl font-bold mb-6">
               Login to User Account

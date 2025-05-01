@@ -92,8 +92,11 @@ const Navbar = () => {
             </div>
           </div>
         </div>
-        <div className="bg-[#0D47A1] rounded-full w-10 h-10 flex items-center justify-center">
-          <svg
+        <div
+          className="bg-[#5499ff] hover:bg-[#7094cae1] text-white rounded w-20 h-10 cursor-pointer flex items-center justify-center"
+          onClick={navigate("/login")}
+        >
+          {/* <svg
             stroke="#ffffff"
             fill="none"
             stroke-width="2"
@@ -107,7 +110,8 @@ const Navbar = () => {
             <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
             <polyline points="16 17 21 12 16 7"></polyline>
             <line x1="21" y1="12" x2="9" y2="12"></line>
-          </svg>
+          </svg> */}
+          Login
         </div>
       </div>
       <div
