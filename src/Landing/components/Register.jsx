@@ -12,6 +12,7 @@ function Register({ initialImageUrl }) {
   const [activeTab, setActiveTab] = useState("left"); // Initial active tab
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [selectedFile, setSelectedFile] = useState(null);
   const handleTabClick = (direction) => {
     if (activeTab === direction) return; // Prevent clicking the active tab
@@ -35,14 +36,15 @@ function Register({ initialImageUrl }) {
 
   const onSubmitRegisterForm = async (e) => {
     e.preventDefault();
-    const rawPhone =
-      phone.startsWith("91") && phone.length > 10 ? phone.slice(-10) : phone;
-    console.log(name, email, phone, selectedFile, "nepf");
+    // const rawPhone =
+    //   phone.startsWith("91") && phone.length > 10 ? phone.slice(-10) : phone;
+    // console.log(name, email, phone, selectedFile, "nepf");
     // FormData for file upload
     const formData = new FormData();
     formData.append("name", name);
     formData.append("email", email);
-    formData.append("phone_number", rawPhone);
+    formData.append("password", password);
+    // formData.append("phone_number", rawPhone);
     formData.append("role", activeTab === "left" ? "user" : "hr");
     formData.append("file", selectedFile);
     console.log(formData, "formData");
@@ -55,7 +57,8 @@ function Register({ initialImageUrl }) {
       alert(response?.data?.message);
       setName("");
       setEmail("");
-      setPhone("");
+      // setPhone("");
+      setPassword("");
       setSelectedFile(null);
     } catch (error) {
       alert(error?.response?.data?.message || "Registration failed!");
@@ -148,20 +151,23 @@ function Register({ initialImageUrl }) {
                   />
                 </div>
 
-                <div className="input-group mb-4">
+                <div className="input-group mb-6">
                   <label
-                    htmlFor="phoneNumber"
+                    htmlFor="password"
                     className="block text-sm font-medium text-gray-700"
                   >
-                    Phone Number
+                    password
                   </label>
-                  <PhoneInput
-                    country="in"
-                    value={phone}
-                    onChange={setPhone}
-                    inputStyle={{ width: "100%" }}
-                    containerStyle={{ width: "100%" }}
+
+                  <input
+                    type="password"
+                    id="password"
+                    name="password"
+                    placeholder="Enter your password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
                     required
+                    className="mt-1 block w-full border border-gray-200 rounded-md p-2"
                   />
                 </div>
 
@@ -208,90 +214,3 @@ function Register({ initialImageUrl }) {
 }
 
 export default Register;
-
-// <div className="main-container">
-//   <div className="signup-container" onSubmit={onSubmitRegisterForm}>
-//     <h2>Create an User Account</h2>
-//     <div className="wrapper">
-//       <div className={`taeb-switch ${activeTab} text-center`}>
-//         <div
-//           className={`taeb ${activeTab === "left" ? "active" : ""}`}
-//           taeb-direction="left"
-//           onClick={() => handleTabClick("left")}
-//         >
-//           User
-//         </div>
-//         <div
-//           className={`taeb ${activeTab === "right" ? "active" : ""}`}
-//           taeb-direction="right"
-//           onClick={() => handleTabClick("right")}
-//         >
-//           HR
-//         </div>
-//       </div>
-//     </div>
-//     <form className="signup-form">
-//       <div className="input-group">
-//         <label htmlFor="username">Username</label>
-//         <input
-//           type="text"
-//           id="username"
-//           name="username"
-//           placeholder="Enter your username"
-//           onChange={nameHandleChange}
-//           required
-//           value={name}
-//         />
-//         {/* <small classNameName="error-message" /> */}
-//       </div>
-//       <div className="input-group">
-//         <label htmlFor="email">Email</label>
-//         <input
-//           type="email"
-//           value={email}
-//           onChange={emailHandleChange}
-//           placeholder="Enter your email"
-//           className="border p-2 w-full rounded"
-//           required
-//         />
-//         {/* <small id="email-error" classNameName="error-message" /> */}
-//       </div>
-//       <div className="input-group">
-//         <label htmlFor="phoneNumber">Phone Number</label>
-//         <PhoneInput
-//           style={{ width: "100%" }} // Parent container width
-//           country="in"
-//           value={phone}
-//           onChange={setPhone}
-//           inputStyle={{ width: "100%" }} // Override input width
-//           required
-//         />
-//       </div>
-//       {activeTab === "left" && (
-//         <div className="input-group">
-//           <label
-//             className="block mb-2 text-sm font-medium"
-//             htmlFor="file_input"
-//           >
-//             Upload file
-//           </label>
-//           <input
-//             className="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-white-50"
-//             id="file_input"
-//             type="file"
-//             onChange={handleFileChange}
-//             required
-//           />
-//         </div>
-//       )}
-//       <button type="submit" className="submit-btn">
-//         Sign Up
-//       </button>
-//       <div className="login-link">
-//         <p className="text-black">
-//           Already have an account? <Link to="/login">Login here</Link>
-//         </p>
-//       </div>
-//     </form>
-//   </div>
-// </div>

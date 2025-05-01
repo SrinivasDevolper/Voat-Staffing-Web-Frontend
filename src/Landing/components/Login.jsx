@@ -9,7 +9,8 @@ import { useNavigate } from "react-router-dom";
 function Login() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
-  const [phone, setPhone] = useState("");
+  const [password, setPassword] = useState("");
+  // const [phone, setPhone] = useState("");
   const [showOtpForm, setShowOtpForm] = useState(false);
   const [otp, setOtp] = useState(["", "", "", "", "", ""]); // Array to store OTP digits
   const navigate = useNavigate();
@@ -32,13 +33,14 @@ function Login() {
     e.preventDefault();
 
     // Strip country code (like 91) and keep only last 10 digits
-    const rawPhone =
-      phone.startsWith("91") && phone.length > 10 ? phone.slice(-10) : phone;
+    // const rawPhone =
+    //   phone.startsWith("91") && phone.length > 10 ? phone.slice(-10) : phone;
 
     const payload = {
       name,
       email,
-      phone_number: rawPhone,
+      password,
+      // phone_number: rawPhone,
     };
 
     try {
@@ -50,6 +52,7 @@ function Login() {
       alert(response?.data?.message);
       setName("");
       setEmail("");
+      setPassword("");
       setShowOtpForm(true);
     } catch (error) {
       console.log(error);
@@ -74,8 +77,8 @@ function Login() {
   };
 
   const handleVerifyOtp = async (e) => {
-    const rawPhone =
-      phone.startsWith("91") && phone.length > 10 ? phone.slice(-10) : phone;
+    // const rawPhone =
+    //   phone.startsWith("91") && phone.length > 10 ? phone.slice(-10) : phone;
     console.log("handle");
     const enteredOtp = otp.join("");
     console.log("Entered OTP:", enteredOtp);
@@ -83,7 +86,8 @@ function Login() {
     console.log("ok");
     e.preventDefault();
     const payload = {
-      phone_number: rawPhone,
+      password,
+      // phone_number: rawPhone,
       otp: enteredOtp,
     };
     try {
@@ -102,12 +106,13 @@ function Login() {
   };
 
   const handleResendOtp = async () => {
-    const rawPhone =
-      phone.startsWith("91") && phone.length > 10 ? phone.slice(-10) : phone;
+    // const rawPhone =
+    //   phone.startsWith("91") && phone.length > 10 ? phone.slice(-10) : phone;
     try {
       // Call your backend login endpoint or separate /resend-otp endpoint
       const response = await axios.post(`${apiUrl}/resend-otp`, {
-        phone_number: rawPhone,
+        // phone_number: rawPhone,
+        password,
       });
       console.log(response, "response");
 
@@ -231,7 +236,7 @@ function Login() {
                 />
               </div>
 
-              <div className="input-group mb-6">
+              {/* <div className="input-group mb-6">
                 <label
                   htmlFor="phoneNumber"
                   className="block text-sm font-medium text-gray-700"
@@ -245,6 +250,26 @@ function Login() {
                   inputStyle={{ width: "100%" }}
                   containerStyle={{ width: "100%" }}
                   required
+                />
+              </div> */}
+
+              <div className="input-group mb-6">
+                <label
+                  htmlFor="password"
+                  className="block text-sm font-medium text-gray-700"
+                >
+                  password
+                </label>
+
+                <input
+                  type="password"
+                  id="password"
+                  name="password"
+                  placeholder="Enter your password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  required
+                  className="mt-1 block w-full border border-gray-200 rounded-md p-2"
                 />
               </div>
 
