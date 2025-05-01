@@ -2,7 +2,7 @@ import React, { useState, useRef } from "react";
 import PhoneInput from "react-phone-input-2";
 import { Link } from "react-router-dom";
 import "react-phone-input-2/lib/style.css";
-import { apiUrl } from "../utilits/apiUrl";
+import { apiUrl } from "../../utilits/apiUrl";
 import axios from "axios";
 // import toast from 'react-hot-toast';
 // import { Toaster } from 'react-hot-toast';

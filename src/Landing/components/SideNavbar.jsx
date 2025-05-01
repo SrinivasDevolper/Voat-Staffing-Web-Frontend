@@ -63,9 +63,9 @@ const StickySidebarButtons = () => {
         <button
           key={section.id}
           onClick={() => scrollToSection(section.id)}
-          className={`flex items-center justify-center px-4 py-2 rounded-full transition-all duration-200 ${
+          className={`flex items-center justify-center py-2 w-25 rounded-full transition-all duration-200 ${
             activeSection === section.id
-              ? "bg-[#0B52C0] text-white"
+              ? "bg-[#0B52C0] text-white h- w-25"
               : "hover:bg-[#ffffff] text-black border-2 border-[#0B52C0]"
           }`}
           style={{ padding: "0.2rem 1.2rem" }}

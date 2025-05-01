@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import "../styles/Navbar.css";
+import "../../styles/Navbar.css";
 
 const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -12,7 +12,7 @@ const Navbar = () => {
 
   return (
     <nav className="navbar">
-      <div className="flex items-center gap-3">
+      <div className="flex items-center gap-3 px-3 py-3">
         {/* Hamburger - Mobile Only */}
         <button
           className="md:hidden text-white"
@@ -52,8 +52,8 @@ const Navbar = () => {
           <input
             type="text"
             placeholder="Search..."
-            className="navbar-search hidden md:block px-4 py-2 rounded-lg"
-            style={{ paddingRight: "2rem" }}
+            className="navbar-search hidden md:block rounded-lg"
+            style={{ paddingRight: "3rem" }}
           />
         </div>
       </div>
@@ -63,7 +63,7 @@ const Navbar = () => {
           <span>ASK FINANCE</span>
         </div>
       </div>
-      <div className="hidden items-center gap-2 sm:flex">
+      <div className="hidden items-center gap-2 lg:flex">
         <div className="switch-wrapper">
           <div className="switch-background">
             <div
@@ -77,11 +77,10 @@ const Navbar = () => {
               }`}
               onClick={() => {
                 handleTabClick("left");
+                navigate("/profile");
               }}
             >
-              <a href="https://studentdashboard00.netlify.app" target="_blank">
-                User
-              </a>
+              Apply Job
             </div>
             <div
               className={`switch-option ${
@@ -89,7 +88,7 @@ const Navbar = () => {
               }`}
               onClick={() => handleTabClick("right")}
             >
-              HR
+              Hire Now
             </div>
           </div>
         </div>
