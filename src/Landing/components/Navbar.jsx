@@ -93,8 +93,8 @@ const Navbar = () => {
           </div>
         </div>
         <div
+          onClick={() => navigate("/login")}
           className="bg-[#5499ff] hover:bg-[#7094cae1] text-white rounded w-20 h-10 cursor-pointer flex items-center justify-center"
-          onClick={navigate("/login")}
         >
           {/* <svg
             stroke="#ffffff"

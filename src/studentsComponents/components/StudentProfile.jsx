@@ -178,7 +178,7 @@ export default function StudentProfile() {
   return (
     <div className="flex">
       <Header />
-      <div className="flex-1 h-screen overflow-y-auto px-4 sm:px-6 py-28">
+      <div className="flex-1 h-screen overflow-y-auto px-4 sm:px-6 pt-25 py-10">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           <div className="bg-white rounded-xl p-4 sm:p-6 shadow-md">
             <div className="flex justify-between items-center mb-4 sm:mb-6">
@@ -318,7 +318,7 @@ export default function StudentProfile() {
             </form>
           </div>
 
-          <div className="bg-white rounded-xl p-4 sm:p-6 shadow-md">
+          <div className="bg-white -order-1 md:order-1 rounded-xl p-4 sm:p-6 shadow-md">
             <h2 className="text-xl sm:text-2xl font-bold text-gray-800 mb-4 sm:mb-6">
               Resume
             </h2>

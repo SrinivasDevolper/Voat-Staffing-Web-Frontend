@@ -80,7 +80,7 @@ const Header = () => {
         >
           <Menu size={20} />
         </button>
-        <h1 className="text-xl font-bold">VOAT</h1>
+        <h1 className="text-2xl font-bold text-center pl-10">VOAT</h1>
         <div className="flex items-center space-x-2">
           <div className="relative">
             <button
@@ -177,9 +177,16 @@ const Header = () => {
           <Home size={20} />
           <span className="font-medium">HOME</span>
         </Link>
-        <Link to="/profile" className="flex items-center justify-center flex-1">
-          <h1 className="text-2xl font-bold">VOAT</h1>
-        </Link>
+
+        <h1 className="text-2xl font-bold text-center">
+          <Link
+            to="/profile"
+            className="flex items-center justify-center flex-1"
+          >
+            VOAT
+          </Link>
+        </h1>
+
         <div className="flex items-center space-x-4">
           <div className="relative">
             <button
