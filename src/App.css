@@ -3,8 +3,6 @@ body {
   font-family: "Montserrat", sans-serif;
   background-color: #f4f4f9;
   color: #0b52c0;
-  /* overflow: hidden; */
-  /* overflow: hidden; */
 }
 
 .main-container {
@@ -201,9 +199,9 @@ section {
 }
 
 #otp-form {
-  max-width: 1000px;
   width: 100%;
   display: flex;
+  text-align: center;
   gap: 20px;
   align-items: center;
   justify-content: center;
@@ -214,13 +212,10 @@ section {
   border: none;
   background-color: #121517;
   color: white;
-  font-size: 2rem; /* Use relative font size */
+  font-size: 2rem;
   text-align: center;
-  padding: 10px;
-  width: 40px; /* Fixed width, adjust as needed */
-  height: 50px; /* Fixed height, adjust as needed */
-  border-radius: 4px;
   outline: 2px solid rgb(66, 66, 66);
+  border-radius: 2px;
 }
 
 #otp-form input:focus-visible {

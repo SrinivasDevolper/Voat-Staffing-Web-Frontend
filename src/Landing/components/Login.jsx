@@ -5,14 +5,15 @@ import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+import OTPInput, { ResendOTP } from "otp-input-react";
 
 function Login() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  // const [phone, setPhone] = useState("");
-  const [showOtpForm, setShowOtpForm] = useState(false);
-  const [otp, setOtp] = useState(["", "", "", "", "", ""]); // Array to store OTP digits
+  const [showOtpForm, setShowOtpForm] = useState(true);
+  // const [otp, setOtp] = useState(["", "", "", "", "", ""]);
+  const [OTP, setOTP] = useState("");
   const navigate = useNavigate();
   const [resendCooldown, setResendCooldown] = useState(120);
   const [resendTimerActive, setResendTimerActive] = useState(true);
@@ -31,11 +32,6 @@ function Login() {
 
   const onSubmitLogin = async (e) => {
     e.preventDefault();
-
-    // Strip country code (like 91) and keep only last 10 digits
-    // const rawPhone =
-    //   phone.startsWith("91") && phone.length > 10 ? phone.slice(-10) : phone;
-
     const payload = {
       name,
       email,
@@ -68,10 +64,8 @@ function Login() {
     const inputs = document.querySelectorAll(".otp-input");
 
     if (value && index < inputs.length - 1) {
-      // Move forward
       inputs[index + 1].focus();
     } else if (!value && index > 0) {
-      // Move backward on empty
       inputs[index - 1].focus();
     }
   };
@@ -79,10 +73,8 @@ function Login() {
   const handleVerifyOtp = async (e) => {
     // const rawPhone =
     //   phone.startsWith("91") && phone.length > 10 ? phone.slice(-10) : phone;
-    console.log("handle");
     const enteredOtp = otp.join("");
     console.log("Entered OTP:", enteredOtp);
-    // Add your OTP verification logic here
     console.log("ok");
     e.preventDefault();
     const payload = {
@@ -109,14 +101,11 @@ function Login() {
     // const rawPhone =
     //   phone.startsWith("91") && phone.length > 10 ? phone.slice(-10) : phone;
     try {
-      // Call your backend login endpoint or separate /resend-otp endpoint
       const response = await axios.post(`${apiUrl}/resend-otp`, {
         // phone_number: rawPhone,
         password,
       });
       console.log(response, "response");
-
-      // Reset timer
       setResendCooldown(120);
       setResendTimerActive(true);
       alert(`${response.data.message} ${response.data.otp}`);
@@ -129,25 +118,17 @@ function Login() {
   return showOtpForm ? (
     <div className="main-container">
       <div className="otp-container">
-        <img
-          onClick={() => navigate("/")}
-          className="cursor-pointer"
-          src="http://cdn-icons-png.flaticon.com/512/93/93634.png"
-          alt="backspace"
-          width={25}
-        />
         <h1 className="title">Enter OTP</h1>
         <form id="otp-form" onSubmit={handleVerifyOtp}>
-          {otp.map((digit, index) => (
-            <input
-              key={index}
-              type="text"
-              className="otp-input"
-              maxLength="1"
-              value={digit}
-              onChange={(e) => handleOtpChange(index, e.target.value)}
-            />
-          ))}
+          <OTPInput
+            value={OTP}
+            onChange={setOTP}
+            autoFocus
+            OTPLength={6}
+            otpType="number"
+            disabled={false}
+            className="p-5 pl-10 "
+          />
         </form>
         <div className="flex justify-around items-end">
           <button id="verify-btn" onClick={handleVerifyOtp}>

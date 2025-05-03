@@ -143,6 +143,39 @@ const Navbar = () => {
           <li className="hover:text-gray-300 cursor-pointer w-full border border-white text-center rounded-full">
             Support
           </li>
+          <li className="flex items-center gap-2 lg:flex">
+            <div className="switch-wrapper" style={{ marginLeft: "0px" }}>
+              <div className="switch-background">
+                <div
+                  className={`switch-indicator ${
+                    activeTab === "right" ? "move-right" : ""
+                  }`}
+                ></div>
+                <div
+                  className={`switch-option ${
+                    activeTab === "left" ? "active-text" : ""
+                  }`}
+                  onClick={() => {
+                    handleTabClick("left");
+                    navigate("/profile");
+                  }}
+                  style={{ fontSize: "10px", padding: "0.3rem" }}
+                >
+                  Apply Job
+                </div>
+                <div
+                  className={`switch-option ${
+                    activeTab === "right" ? "active-text" : ""
+                  }`}
+                  onClick={() => handleTabClick("right")}
+                  style={{ fontSize: "10px", padding: "0.3rem" }}
+                >
+                  Hire Now
+                </div>
+              </div>
+            </div>
+          </li>
+
           <li className="hover:text-gray-300 cursor-pointer w-full border border-white text-center rounded-full">
             Logout
           </li>
