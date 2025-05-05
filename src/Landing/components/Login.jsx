@@ -1,19 +1,18 @@
 import { useState, useEffect } from "react";
 import { apiUrl } from "../../utilits/apiUrl";
 import axios from "axios";
-import PhoneInput from "react-phone-input-2";
+// import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
-import OTPInput, { ResendOTP } from "otp-input-react";
+import OTPInput from "otp-input-react";
 
 function Login() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [showOtpForm, setShowOtpForm] = useState(true);
-  // const [otp, setOtp] = useState(["", "", "", "", "", ""]);
-  const [OTP, setOTP] = useState("");
+  const [showOtpForm, setShowOtpForm] = useState(false);
+  const [otp, setOTP] = useState("");
   const navigate = useNavigate();
   const [resendCooldown, setResendCooldown] = useState(120);
   const [resendTimerActive, setResendTimerActive] = useState(true);
@@ -33,7 +32,7 @@ function Login() {
   const onSubmitLogin = async (e) => {
     e.preventDefault();
     const payload = {
-      name,
+      // name,
       email,
       password,
       // phone_number: rawPhone,
@@ -45,11 +44,15 @@ function Login() {
           "Content-Type": "application/json",
         },
       });
-      alert(response?.data?.message);
-      setName("");
-      setEmail("");
-      setPassword("");
-      setShowOtpForm(true);
+      if (response?.data?.message) {
+        alert(response.data.message);
+        localStorage.setItem("authToken", response.data.token);
+        setName("");
+        setPassword("");
+        setShowOtpForm(true); // Show OTP form on successful login
+      } else {
+        alert(response.data.message || "Login failed");
+      }
     } catch (error) {
       console.log(error);
       alert(error?.response?.data?.message || "Login failed!");
@@ -59,7 +62,7 @@ function Login() {
   const handleOtpChange = (index, value) => {
     const newOtp = [...otp];
     newOtp[index] = value;
-    setOtp(newOtp);
+    setOTP(newOtp);
 
     const inputs = document.querySelectorAll(".otp-input");
 
@@ -89,8 +92,15 @@ function Login() {
         },
       });
       alert(response?.data?.message);
-      setOtp("");
-      navigate("/");
+      setOTP("");
+      const role = response?.data?.role; // Assuming the role is returned here
+      if (role === "user") {
+        navigate("/apply-for-jobs"); // Redirect to the Apply for Job page in student dashboard
+      } else if (role === "admin") {
+        navigate("/admin-dashboard"); // Redirect to admin dashboard if the user is an admin
+      } else {
+        navigate("/"); // Default redirect if no specific role found
+      }
     } catch (error) {
       console.error(error);
       alert(error?.response?.data?.message || "OTP failed!");
@@ -121,7 +131,7 @@ function Login() {
         <h1 className="title">Enter OTP</h1>
         <form id="otp-form" onSubmit={handleVerifyOtp}>
           <OTPInput
-            value={OTP}
+            value={otp}
             onChange={setOTP}
             autoFocus
             OTPLength={6}

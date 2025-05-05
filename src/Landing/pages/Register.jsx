@@ -1,6 +1,6 @@
-import React, { useState, useRef, useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import OTPInput from "otp-input-react";
+import React, { useState, useRef } from "react";
+import PhoneInput from "react-phone-input-2";
+import { Link } from "react-router-dom";
 import "react-phone-input-2/lib/style.css";
 import { apiUrl } from "../../utilits/apiUrl";
 import axios from "axios";
@@ -13,25 +13,7 @@ function Register({ initialImageUrl }) {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [otp, setOTP] = useState("");
   const [selectedFile, setSelectedFile] = useState(null);
-  const [showOtpForm, setShowOtpForm] = useState(false);
-  const [resendCooldown, setResendCooldown] = useState(120);
-  const [resendTimerActive, setResendTimerActive] = useState(true);
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    let timer;
-    if (resendTimerActive && resendCooldown > 0) {
-      timer = setTimeout(() => {
-        setResendCooldown((prev) => prev - 1);
-      }, 1000);
-    } else if (resendCooldown === 0) {
-      setResendTimerActive(false);
-    }
-    return () => clearTimeout(timer);
-  }, [resendCooldown, resendTimerActive]);
-
   const handleTabClick = (direction) => {
     if (activeTab === direction) return; // Prevent clicking the active tab
 
@@ -72,118 +54,26 @@ function Register({ initialImageUrl }) {
           "Content-Type": "multipart/form-data",
         },
       });
-      if (response?.data?.message) {
-        alert(response.data.message);
-        localStorage.setItem("authToken", response.data.token);
-        setName("");
-        setPassword("");
-        setShowOtpForm(true); // Show OTP form on successful login
-      } else {
-        alert(response.data.message || "Login failed");
-      }
+      alert(response?.data?.message);
+      setName("");
+      setEmail("");
+      // setPhone("");
+      setPassword("");
+      setSelectedFile(null);
     } catch (error) {
       alert(error?.response?.data?.message || "Registration failed!");
     }
   };
 
-  const handleVerifyOtp = async (e) => {
-    // const rawPhone =
-    //   phone.startsWith("91") && phone.length > 10 ? phone.slice(-10) : phone;
-    const enteredOtp = otp.join("");
-    console.log("Entered OTP:", enteredOtp);
-    console.log("ok");
-    e.preventDefault();
-    const payload = {
-      password,
-      // phone_number: rawPhone,
-      otp: enteredOtp,
-    };
-    try {
-      const response = await axios.post(`${apiUrl}/verify-otp`, payload, {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-      alert(response?.data?.message);
-      setOTP("");
-      const role = response?.data?.role; // Assuming the role is returned here
-      if (role === "user") {
-        navigate("/apply-for-jobs"); // Redirect to the Apply for Job page in student dashboard
-      } else if (role === "admin") {
-        navigate("/admin-dashboard"); // Redirect to admin dashboard if the user is an admin
-      } else {
-        navigate("/"); // Default redirect if no specific role found
-      }
-    } catch (error) {
-      console.error(error);
-      alert(error?.response?.data?.message || "OTP failed!");
-    }
-  };
-
-  const handleResendOtp = async () => {
-    // const rawPhone =
-    //   phone.startsWith("91") && phone.length > 10 ? phone.slice(-10) : phone;
-    try {
-      const response = await axios.post(`${apiUrl}/resend-otp`, {
-        // phone_number: rawPhone,
-        password,
-      });
-      console.log(response, "response");
-      setResendCooldown(120);
-      setResendTimerActive(true);
-      alert(`${response.data.message} ${response.data.otp}`);
-    } catch (error) {
-      console.log(error, "error");
-      alert("Failed to resend OTP.");
-    }
-  };
-
-  return showOtpForm ? (
-    <div className="main-container min-h-screen">
-      <div className="otp-container">
-        <h1 className="title">Enter OTP</h1>
-        <form id="otp-form" onSubmit={handleVerifyOtp}>
-          <OTPInput
-            value={otp}
-            onChange={setOTP}
-            autoFocus
-            OTPLength={6}
-            otpType="number"
-            disabled={false}
-            className="p-5 pl-10 "
-          />
-        </form>
-        <div className="flex justify-around items-center">
-          <button id="verify-btn" onClick={handleVerifyOtp}>
-            Verify OTP
-          </button>
-          {resendTimerActive ? (
-            <span>Resend OTP in {resendCooldown}s</span>
-          ) : (
-            <button
-              onClick={handleResendOtp}
-              disabled={resendTimerActive}
-              style={{
-                backgroundColor: resendTimerActive ? "gray" : "gray",
-                color: "white",
-                cursor: resendTimerActive ? "not-allowed" : "pointer",
-                alignSelf: "end",
-                padding: "7px",
-                borderRadius: "4px",
-              }}
-            >
-              Resend OTP
-            </button>
-          )}
-        </div>
-      </div>
-    </div>
-  ) : (
+  return (
     <section
-      className="flex items-center justify-center bg-gradient-to-r from-blue-400 to-blue-200"
+      className="flex items-center justify-center min-h-dvh bg-gradient-to-r from-blue-400 to-blue-200"
       style={{ padding: "1rem" }}
     >
-      <div className="flex flex-col md:flex-row bg-white rounded-lg shadow-lg max-w-4xl w-full">
+      <div
+        className="flex flex-col md:flex-row bg-white rounded-lg shadow-lg max-w-4xl w-full"
+        style={{ height: "100vh" }}
+      >
         {/* Left Image */}
         <div className="md:w-1/2 hidden md:block">
           <img

@@ -3,13 +3,15 @@ import { Routes, Route, useLocation, Navigate } from "react-router-dom";
 import Register from "./Landing/components/Register";
 import Login from "./Landing/components/Login";
 import MainPages from "./Landing/components/MainPages";
-import StudentDashboard from "./studentsComponents/components/StudentDashboard";
+// import StudentDashboard from "./studentsComponents/components/StudentDashboard";
 import StudentProfile from "./studentsComponents/components/StudentProfile";
 import SchedulePage from "./studentsComponents/components/SchedulePage";
 import ApplyForJobs from "./studentsComponents/components/ApplyForJobs";
 import JobDetails from "./studentsComponents/components/jobView/JobDetails";
 import JobApplied from "./studentsComponents/components/JobApplied";
 import "./App.css";
+import { apiUrl } from "./utilits/apiUrl";
+console.log("👉 imported apiUrl from utilits/apiUrl.js, value =", apiUrl);
 function App() {
   return (
     <div>
