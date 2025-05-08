@@ -1,4 +1,5 @@
-import React from "react";
+import "../../styles/Sidebar.css";
+import "../../styles/Home.css";
 
 function HomePags() {
   return (

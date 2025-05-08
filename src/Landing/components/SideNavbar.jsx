@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Home, RefreshCw, Briefcase, HelpCircle, Phone } from "lucide-react";
-
+import "../../styles/Sidebar.css";
 const sections = [
   { id: "home", icon: <Home size={20} />, label: "Home" },
   { id: "updates", icon: <RefreshCw size={20} />, label: "Updates" },

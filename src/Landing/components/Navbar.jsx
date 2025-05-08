@@ -131,18 +131,6 @@ const Navbar = () => {
           className="flex flex-col justify-center gap-6 text-white text-lg"
           style={{ height: "80vh" }}
         >
-          <li className="hover:text-gray-300 cursor-pointer w-full border border-white text-center rounded-full">
-            Home
-          </li>
-          <li className="hover:text-gray-300 cursor-pointer w-full border border-white text-center rounded-full">
-            Updates
-          </li>
-          <li className="hover:text-gray-300 cursor-pointer w-full border border-white text-center rounded-full">
-            FAQs
-          </li>
-          <li className="hover:text-gray-300 cursor-pointer w-full border border-white text-center rounded-full">
-            Support
-          </li>
           <li className="flex items-center gap-2 lg:flex">
             <div className="switch-wrapper" style={{ marginLeft: "0px" }}>
               <div className="switch-background">
@@ -175,9 +163,23 @@ const Navbar = () => {
               </div>
             </div>
           </li>
-
           <li className="hover:text-gray-300 cursor-pointer w-full border border-white text-center rounded-full">
-            Logout
+            Home
+          </li>
+          <li className="hover:text-gray-300 cursor-pointer w-full border border-white text-center rounded-full">
+            Updates
+          </li>
+          <li className="hover:text-gray-300 cursor-pointer w-full border border-white text-center rounded-full">
+            FAQs
+          </li>
+          <li className="hover:text-gray-300 cursor-pointer w-full border border-white text-center rounded-full">
+            Support
+          </li>
+          <li
+            onClick={() => navigate("/login")}
+            className="hover:text-gray-300 cursor-pointer w-full border border-white text-center rounded-full"
+          >
+            Login
           </li>
         </ul>
       </div>

@@ -1,0 +1,142 @@
+.home-container {
+  display: flex;
+  flex: 1;
+  height: 100vh;
+  width: 100%;
+  display: flex;
+  min-height: 100vh;
+}
+
+.main-content {
+  flex: 1;
+  overflow-y: auto;
+  background-color: #f5f9fd;
+  padding: 1rem 2rem;
+}
+
+/* Mobile & Tablet */
+@media screen and (max-width: 900px) {
+  .sidebar-buttons {
+    display: none;
+    flex-direction: row;
+    width: 100%;
+    height: 60px;
+    top: auto;
+    bottom: 0;
+    left: 0;
+    border-right: none;
+    border-top: 1px solid #ccc;
+  }
+
+  .home-container {
+    flex-direction: column-reverse;
+  }
+
+  .main-content {
+    padding: 1rem 0rem; /* Mobile bar */
+    padding-bottom: 60px;
+  }
+}
+
+/* Main Container */
+
+*/
+
+/* Homepage Container */
+.main-page {
+  width: 100%;
+  padding-top: 1rem;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  padding-bottom: 3rem;
+  scroll-snap-align: start;
+}
+
+.home-page-container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex: 1;
+}
+
+@media screen and (max-width: 425px) {
+  .home-page-container {
+    margin-left: 0;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    /* background-color: red; */
+  }
+}
+
+.home-page-container h1 {
+  font-size: 2rem;
+  display: block;
+  width: 100%;
+  line-height: normal;
+  margin-top: 0;
+  margin-bottom: 1.3rem;
+  color: #161616;
+  text-decoration: none;
+  font-weight: normal;
+}
+.home-page-container h1 span {
+  font-weight: bold;
+}
+
+.search-container {
+  padding: 8px;
+  margin-bottom: 3rem;
+}
+
+@media screen and (max-width: 425px) {
+  .search-container {
+    padding: 0;
+    flex-direction: column;
+    align-items: center;
+    border-radius: 10px;
+    gap: 0;
+    /* background-color: red; */
+    /* margin-left: 2rem;
+    margin-right: 2rem; */
+  }
+  .search-container div {
+    border-right: none !important;
+    border-radius: 0 !important;
+    /* background-color: red; */
+    /* background-color: red; */
+    width: 100%;
+    padding-left: 20px !important;
+    padding-right: 20px !important;
+  }
+  .search-container div input {
+    border: none !important;
+  }
+  .search-container button {
+    width: 90%;
+    margin: 10px 0px;
+  }
+}
+
+.search-inputs {
+  outline: none !important;
+  border: none !important;
+  border-right: #c7c7f8 1px solid !important;
+  border-radius: 0 !important;
+}
+
+.rating-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 2rem;
+}
+@media screen and (max-width: 900px) {
+  .rating-container {
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 10px;
+  }
+}

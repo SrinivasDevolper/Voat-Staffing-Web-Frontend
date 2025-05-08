@@ -9,6 +9,7 @@ import SchedulePage from "./studentsComponents/components/SchedulePage";
 import ApplyForJobs from "./studentsComponents/components/ApplyForJobs";
 import JobDetails from "./studentsComponents/components/jobView/JobDetails";
 import JobApplied from "./studentsComponents/components/JobApplied";
+import ForgotPassword from "./Landing/pages/ForgotPassword";
 import "./App.css";
 import { apiUrl } from "./utilits/apiUrl";
 console.log("👉 imported apiUrl from utilits/apiUrl.js, value =", apiUrl);
@@ -18,6 +19,7 @@ function App() {
       <Routes>
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/forgot-password" element={<ForgotPassword />} />
         <Route path="/" element={<MainPages />} />
         <Route path="/profile" element={<StudentProfile />} />
         <Route path="/schedule" element={<SchedulePage />} />
