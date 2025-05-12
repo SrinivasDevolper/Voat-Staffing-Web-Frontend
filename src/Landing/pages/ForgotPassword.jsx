@@ -1,15 +1,28 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 export default function ForgotPassword() {
   const [email, setEmail] = useState("");
   const [submitted, setSubmitted] = useState(false);
+  const [error, setError] = useState("");
   const navigate = useNavigate();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // API call logic
-    setSubmitted(true);
+    setError("");
+
+    try {
+      const response = await axios.post(
+        "http://localhost:3001/forgot-password",
+        { email }
+      );
+      console.log("Reset email sent:", response.data);
+      setSubmitted(true);
+    } catch (err) {
+      const msg = err.response?.data?.error || "Something went wrong.";
+      setError(msg);
+    }
   };
 
   const handleLoginRedirect = () => {
@@ -42,6 +55,8 @@ export default function ForgotPassword() {
                 className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
             </div>
+
+            {error && <div className="text-red-600 font-medium">{error}</div>}
 
             <button
               type="submit"

@@ -4,16 +4,17 @@ import axios from "axios";
 // import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";
 import { Link } from "react-router-dom";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import Otp from "./Otp";
 
 function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [regToken, setRegToken] = useState("");
   const [showOtpForm, setShowOtpForm] = useState(false);
   const location = useLocation();
   const passwordRef = useRef(null);
-
+  const navigate = useNavigate();
   useEffect(() => {
     const params = new URLSearchParams(location.search);
     console.log(params);
@@ -25,29 +26,75 @@ function Login() {
   const onSubmitLogin = async (e) => {
     e.preventDefault();
     const payload = {
-      // name,
       email,
       password,
-      // phone_number: rawPhone,
     };
 
     try {
-      const response = await axios.post(`${apiUrl}/login`, payload, {
+      const response = await axios.post(`${apiUrl}/login-password`, payload, {
         headers: {
           "Content-Type": "application/json",
         },
       });
+      console.log(response, "response");
       if (response?.data?.message) {
         alert(response.data.message);
-        localStorage.setItem("authToken", response.data.token);
-        setPassword("");
+        const data = response.data.data;
+        console.log(data, "data");
+        // localStorage.setItem("authToken", response.data.token);
+        switch (data?.role) {
+          case "jobseeker":
+            navigate("/apply-for-jobs");
+            break;
+          case "admin":
+            navigate("/admin-dashboard");
+            break;
+          default:
+            navigate("/");
+        }
+        console.log(response.data.token, "token");
+        setRegToken(response.data.token);
+        // setShowOtpForm(true); // Show OTP form on successful login
+      } else {
+        alert(response.data.message || "Login failed");
+      }
+    } catch (error) {
+      console.log(error);
+      alert(error?.response?.data?.error || "Login failed!");
+    }
+  };
+  const onSubmitLoginOtp = async (e) => {
+    e.preventDefault();
+    if (!email) {
+      alert("Please enter your email");
+      return;
+    }
+    const payload = {
+      email,
+    };
+
+    try {
+      const response = await axios.post(
+        `${apiUrl}/request-login-otp`,
+        payload,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      console.log(response, "response");
+      if (response?.data?.message) {
+        alert(response.data.message);
+        // localStorage.setItem("authToken", response.data.token);
+        // setPassword("");
         setShowOtpForm(true); // Show OTP form on successful login
       } else {
         alert(response.data.message || "Login failed");
       }
     } catch (error) {
       console.log(error);
-      alert(error?.response?.data?.message || "Login failed!");
+      alert(error?.response?.data?.error || "Login failed!");
     }
   };
 
@@ -130,6 +177,7 @@ function Login() {
               type="button"
               onClick={onSubmitLogin}
               className="w-full bg-blue-700 hover:bg-blue-800 text-white font-bold py-3 rounded-md text-lg tracking-wider  cursor-pointer"
+              onScrollTop={() => window.scrollTo(0, 0)}
             >
               LOGIN
             </button>
@@ -137,14 +185,17 @@ function Login() {
             {/* OTP Button */}
             <button
               type="button"
-              onClick={() => setShowOtpForm(true)}
+              onClick={onSubmitLoginOtp}
               className="w-full border-2 border-blue-700 text-black font-extrabold py-3 rounded-md text-lg tracking-wide hover:bg-blue-700 hover:text-white transition-colors duration-300 cursor-pointer"
+              onScrollTop={() => window.scrollTo(0, 0)}
             >
               LOGIN WITH OTP
             </button>
 
             {/* OTP Form */}
-            {showOtpForm && <Otp />}
+            {showOtpForm && (
+              <Otp email={email} token={regToken} type={"signin"} />
+            )}
           </form>
 
           <div className="text-center mt-6">

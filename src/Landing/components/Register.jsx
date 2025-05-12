@@ -14,6 +14,7 @@ function Register({ initialImageUrl }) {
   console.log(email, "email");
   const [password, setPassword] = useState("");
   const [selectedFile, setSelectedFile] = useState(null);
+  const [regToken, setRegToken] = useState("");
   const [otpSent, setOtpSent] = useState(false);
   const [sendOtpDisabled, setSendOtpDisabled] = useState(false);
 
@@ -53,9 +54,11 @@ function Register({ initialImageUrl }) {
       console.log(response, "response");
       if (response?.status === 200) {
         alert(response?.data?.message);
-        localStorage.setItem("authToken", response.data.token);
+        // localStorage.setItem("authToken", response.data.token);
         setOtpSent(true);
-        setSendOtpDisabled(true); // Show OTP form on successful login
+        setSendOtpDisabled(true);
+        console.log(response.data.token, "token");
+        setRegToken(response.data.token); // Show OTP form on successful login
       } else {
         console.log(response, "response");
         alert(response?.data?.error || "Registeration failed");
@@ -177,6 +180,7 @@ function Register({ initialImageUrl }) {
                   ? "bg-gray-400 cursor-not-allowed"
                   : "bg-blue-600 text-white hover:bg-blue-700"
               }`}
+              onScrollTop={() => window.scrollTo(0, 0)}
             >
               Send OTP
             </button>
@@ -191,7 +195,9 @@ function Register({ initialImageUrl }) {
               </Link>
             </p>
           </form>
-          <div>{otpSent && <Otp email={email} />}</div>
+          <div>
+            {otpSent && <Otp email={email} token={regToken} type={"signup"} />}
+          </div>
         </div>
       </div>
     </section>
