@@ -37,16 +37,22 @@ function Register({ initialImageUrl }) {
     setOtpSent(false);
     setSendOtpDisabled(false);
   };
-
   const onSubmitRegisterForm = async (e) => {
     e.preventDefault();
     const formData = {
       email,
       password,
       role: activeTab === "left" ? "jobseeker" : "hr",
-      // file: selectedFile,
+      file: activeTab === "left" ? selectedFile : null,
     };
-    console.log(formData, "formData");
+    if (!email || !password) {
+      alert("Please fill in all fields");
+      return;
+    }
+    if (email.endsWith("@gmail.com")) {
+      alert("Please use a valid email address");
+      return;
+    }
     try {
       const response = await axios.post(`${apiUrl}/signup`, formData, {
         headers: { "Content-Type": "application/json" },
@@ -95,7 +101,14 @@ function Register({ initialImageUrl }) {
           {/* Tab Switcher */}
           <div className="flex mb-6 rounded-md overflow-hidden border border-gray-300">
             <div
-              onClick={() => handleTabClick("left")}
+              onClick={() => {
+                handleTabClick("left");
+                setOtpSent(false);
+                setEmail("");
+                setPassword("");
+                setSelectedFile(null);
+                setSendOtpDisabled(false);
+              }}
               className={`w-1/2 py-2 text-center cursor-pointer font-medium transition-colors duration-200 ${
                 activeTab === "left"
                   ? "bg-blue-500 text-white"
@@ -105,7 +118,14 @@ function Register({ initialImageUrl }) {
               User
             </div>
             <div
-              onClick={() => handleTabClick("right")}
+              onClick={() => {
+                handleTabClick("right");
+                setOtpSent(false);
+                setEmail("");
+                setPassword("");
+                setSelectedFile(null);
+                setSendOtpDisabled(false);
+              }}
               className={`w-1/2 py-2 text-center cursor-pointer font-medium transition-colors duration-200 ${
                 activeTab === "right"
                   ? "bg-blue-500 text-white"
@@ -165,6 +185,7 @@ function Register({ initialImageUrl }) {
                 <input
                   type="file"
                   id="file_input"
+                  accept=".pdf,.doc,.docx"
                   onChange={(e) => setSelectedFile(e.target.files[0])}
                   className="w-full p-2 border border-gray-300 rounded-md bg-gray-50 text-sm text-gray-700"
                 />

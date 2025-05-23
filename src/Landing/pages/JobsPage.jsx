@@ -123,7 +123,7 @@ export default function JobBoard() {
       {/* Show More Button */}
       <div className="text-center mt-10">
         <button
-          onClick={() => navigate("/jobs")} // Adjust to your route
+          onClick={() => navigate("/apply-for-jobs")} // Adjust to your route
           className="px-6 py-3 details-btn bg-blue-600 text-white rounded-full hover:bg-blue-700 transition"
         >
           Show More Jobs

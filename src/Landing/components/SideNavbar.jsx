@@ -55,9 +55,7 @@ const StickySidebarButtons = () => {
 
   return (
     <div
-      className={`sidebar-buttons fixed top-1/4 left-4 flex flex-col gap-4 z-50 transition-opacity duration-300 ${
-        isFooterVisible ? "opacity-0 pointer-events-none" : "opacity-100"
-      }`}
+      className={`sidebar-buttons fixed top-1/4 left-4 flex flex-col gap-4 z-50 transition-opacity duration-300 `}
     >
       {sections.map((section) => (
         <button
@@ -67,6 +65,8 @@ const StickySidebarButtons = () => {
             activeSection === section.id
               ? "bg-[#0B52C0] text-white h- w-25"
               : "hover:bg-[#ffffff] text-black border-2 border-[#0B52C0]"
+          } ${
+            isFooterVisible ? "opacity-0 pointer-events-none" : "opacity-100"
           }`}
           style={{ padding: "0.2rem 1.2rem" }}
         >

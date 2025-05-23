@@ -30,6 +30,15 @@ function Login() {
       password,
     };
 
+    if (!email || !password) {
+      alert("Please fill in all fields");
+      return;
+    }
+    if (email.endsWith("@gmail.com")) {
+      alert("Please use a valid email address");
+      return;
+    }
+
     try {
       const response = await axios.post(`${apiUrl}/login-password`, payload, {
         headers: {
@@ -65,13 +74,17 @@ function Login() {
   };
   const onSubmitLoginOtp = async (e) => {
     e.preventDefault();
-    if (!email) {
-      alert("Please enter your email");
-      return;
-    }
     const payload = {
       email,
     };
+    if (!email) {
+      alert("Please fill in all fields");
+      return;
+    }
+    // if (email.endsWith("@gmail.com")) {
+    //   alert("Please use a valid email address");
+    //   return;
+    // }
 
     try {
       const response = await axios.post(
